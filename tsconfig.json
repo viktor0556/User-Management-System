@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",                      
+    "target": "es6",                           
+    "outDir": "./dist",                          
+    "strict": true,                             
+    "noImplicitAny": true,                        
+    "noUnusedLocals": true,                       
+    "noUnusedParameters": true,                  
+    "noImplicitReturns": false,                 
+    "noFallthroughCasesInSwitch": true,        
+    "sourceMap": true,                           
+    "baseUrl": ".",                             
+    "resolveJsonModule": true,                   
+    "esModuleInterop": true,                     
+    "skipLibCheck": true,                       
+    "forceConsistentCasingInFileNames": true    
+  },
+  "include": [
+    "./src/**/*"                               
+  ],
+  "exclude": [
+    "node_modules",                            
+  ]
+}

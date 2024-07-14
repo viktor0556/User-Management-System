@@ -3,8 +3,12 @@ import pool from '../utils/db';
 
 export const getUsers = (_req: Request, res: Response) => {
   pool.query('SELECT * FROM users ORDER BY id ASC', (err, result) => {
-    if (err) throw err;
-    res.status(200).json(result.rows);
+    if (err) {
+      console.error('Error in getUsers:', err);
+      res.status(500).json({ error: 'Server error' });
+    } else {
+      res.status(200).json(result.rows);
+    }
   });
 };
 

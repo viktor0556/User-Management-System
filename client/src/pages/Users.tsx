@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getUsers } from '../services/api';
 import { User } from '../types/User';
+import Logout from '../components/LogOut';
 
 const Users: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -25,6 +26,7 @@ const Users: React.FC = () => {
 
   return (
     <div>
+      <Logout />
       <h2>Users</h2>
       <ul>
         {users.map(user => (

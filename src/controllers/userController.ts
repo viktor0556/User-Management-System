@@ -36,13 +36,20 @@ export const updateUser = (req: Request, res: Response) => {
   );
 };
 
-export const deleteUser = (req: Request, res: Response) => {
-  const id = parseInt(req.params.id);
+export const deleteUser = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id, 10);
 
-  pool.query('DELETE FROM users WHERE id = $1', [id], (err, _result) => {
-    if (err) throw err;
-    res.status(200).send(`User deleted with ID: ${id}`);
-  });
+  try {
+    const result = await pool.query('DELETE FROM users Where id = $1', [id]);
+    if (result.rowCount === 0) {
+      res.status(404).json({ error: 'User not found' });
+    } else {
+      res.status(200).json({ message: 'User deleted succesfully' });
+    }
+  } catch (err) {
+    console.error('Error deleting user:', err);
+    res.status(500).json({ error: 'Server error' })
+  }
 };
 
 

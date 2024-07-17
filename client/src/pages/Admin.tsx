@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getAllUsers } from '../services/api';
+import { getAllUsers, deleteUser } from '../services/api';
 import { UserInterface } from '../types/User';
 
 const Admin: React.FC = () => {
@@ -11,7 +11,8 @@ const Admin: React.FC = () => {
         const token = localStorage.getItem('token');
         if (token) {
           const response = await getAllUsers(token);
-          setUsers(response);
+          const filteredUsers = response.filter(user => user.role !== 'admin');
+          setUsers(filteredUsers);
         }
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -21,9 +22,16 @@ const Admin: React.FC = () => {
     fetchUsers();
   }, []);
 
-  const handleDelete = () => {
-
-  }
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteUser(id);
+      setUsers(users.filter(user => user.id !== parseInt(id, 10)));
+      alert('User deleted successfully');
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      alert('Failed to delete user');
+    }
+  };
 
   return (
     <div>
@@ -32,8 +40,7 @@ const Admin: React.FC = () => {
         {users.map((user) => (
           <li key={user.id}>
             {user.name} ({user.email})
-            <button onClick={handleDelete}>Delete</button>
-            <button>Update</button>
+            <button onClick={() => handleDelete(user.id.toString())}>Delete</button>
           </li>
         ))}
         

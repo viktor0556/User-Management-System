@@ -43,3 +43,12 @@ export const newPassword = async (email: string, currentPassword: string, newPas
   return response.data;
 };
 
+export const deleteUser = async (id: string): Promise<void> => {
+  const token = localStorage.getItem('token');
+  const response = await api.delete(`users/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  });
+  return response.data;
+};

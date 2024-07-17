@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getAllUsers, deleteUser } from '../services/api';
 import { UserInterface } from '../types/User';
+import Logout from '../components/LogOut';
 
 const Admin: React.FC = () => {
   const [users, setUsers] = useState<UserInterface[]>([]);
@@ -43,7 +44,7 @@ const Admin: React.FC = () => {
             <button onClick={() => handleDelete(user.id.toString())}>Delete</button>
           </li>
         ))}
-        
+        {<Logout />}
       </ul>
     </div>
   );

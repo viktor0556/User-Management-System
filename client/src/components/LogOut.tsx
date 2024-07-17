@@ -3,7 +3,7 @@ import React from 'react';
 
 const Logout: React.FC = () => {
 
-  const navigate = useNavigate() 
+  const navigate = useNavigate() ;
 
   const handleLogOut = () => {
     localStorage.removeItem('token');

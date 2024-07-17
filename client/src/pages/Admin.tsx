@@ -1,42 +1,45 @@
 import React, { useEffect, useState } from 'react';
-import { getUsers } from '../services/api';
-import { User } from '../types/User';
-import Logout from '../components/LogOut';
+import { getAllUsers } from '../services/api';
+import { UserInterface } from '../types/User';
 
-const Users: React.FC = () => {
-  const [users, setUsers] = useState<User[]>([]);
+const Admin: React.FC = () => {
+  const [users, setUsers] = useState<UserInterface[]>([]);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const token = localStorage.getItem('token');
         if (token) {
-          const users = await getUsers(token);
-          console.log('Fetched Users:', users); 
-          setUsers(users);
-        } else {
-          console.error('No token found');
+          const response = await getAllUsers(token);
+          setUsers(response);
         }
       } catch (error) {
         console.error('Error fetching users:', error);
       }
     };
+
     fetchUsers();
   }, []);
 
+  const handleDelete = () => {
+
+  }
+
   return (
     <div>
-      <Logout />
-      <h2>Users</h2>
+      <h2>Admin Page</h2>
       <ul>
-        {users.map(user => (
+        {users.map((user) => (
           <li key={user.id}>
             {user.name} ({user.email})
+            <button onClick={handleDelete}>Delete</button>
+            <button>Update</button>
           </li>
         ))}
+        
       </ul>
     </div>
   );
 };
 
-export default Users;
+export default Admin;

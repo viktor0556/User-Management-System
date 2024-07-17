@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-
 const pool = new Pool({
   user: process.env.USER,
   host: process.env.HOST,

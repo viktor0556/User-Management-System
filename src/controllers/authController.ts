@@ -29,27 +29,45 @@ export const registerUser = async (req: Request, res: Response) => {
   }
 };
 
-export const loginUser = (req: Request, res: Response) => {
+export const loginUser = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
-  pool.query('SELECT * FROM users WHERE email = $1', [email], async (err, results) => {
-    if (err) throw err;
+  try {
+    const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+    const user = result.rows[0];
 
-    if (results.rows.length > 0) {
-      const user = results.rows[0];
-      const validPassword = await bcrypt.compare(password, user.password);
-      if (validPassword) {
-        const accessToken = jwt.sign(
-          { id: user.id, email: user.email },
-          process.env.ACCESS_TOKEN_SECRET as string,
-          { expiresIn: '1h' }
-        );
-        res.json({ accessToken });
-      } else {
-        res.status(401).send('Invalid password');
-      }
+    if (user && await bcrypt.compare(password, user.password)) {
+      const token = jwt.sign(
+        { id: user.id, email: user.email, role: user.role },
+        process.env.ACCESS_TOKEN_SECRET as string,
+        { expiresIn: '1h' }
+      );
+      res.json({ token, name: user.name });
     } else {
-      res.status(404).send('User not found');
+      res.status(401).send('Invalid credentials');
     }
-  });
+  } catch (err) {
+    console.error('Login error:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+export const changePassword = async (req: Request, res: Response) => {
+  const { email, currentPassword, newPassword } = req.body;
+
+  try {
+    const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+    const user = result.rows[0];
+
+    if (user && await bcrypt.compare(currentPassword, user.password)) {
+      const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+      await pool.query('UPDATE users SET password = $1 WHERE email = $2', [hashedNewPassword, email]);
+      res.status(200).send('Password changed succesfully');
+    } else {
+      res.status(401).send('Current password is incorrect');
+    }
+  } catch (err) {
+    console.error('Error changing password:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
 };

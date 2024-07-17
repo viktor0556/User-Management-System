@@ -21,6 +21,7 @@ export const getUserById = (req: Request, res: Response) => {
   });
 };
 
+
 export const updateUser = (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
   const { name, email, password } = req.body;
@@ -43,3 +44,5 @@ export const deleteUser = (req: Request, res: Response) => {
     res.status(200).send(`User deleted with ID: ${id}`);
   });
 };
+
+

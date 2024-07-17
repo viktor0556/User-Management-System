@@ -4,7 +4,9 @@ import NavBar from './components/NavBar';
 import Home from './pages/Home';
 import Register from './pages/Register';
 import Login from './pages/Login';
-import Users from './pages/Users';
+import Admin from './pages/Admin';
+import User from './pages/User';
+import NewPassword from './pages/NewPassword';
 
 const App: React.FC = () => {
   return (
@@ -14,7 +16,9 @@ const App: React.FC = () => {
         <Route path="/" Component={Home} />
         <Route path="/register" Component={Register} />
         <Route path="/login" Component={Login} />
-        <Route path="/users" Component={Users} />
+        <Route path="/admin" Component={Admin} />
+        <Route path="/user" Component={User} />
+        <Route path="/new-password" Component={NewPassword} />
       </Routes>
     </Router>
   );

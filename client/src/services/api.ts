@@ -7,11 +7,15 @@ const api = axios.create({
 
 export const register = async (name: string, email: string, password: string) => {
   const response = await api.post('/auth/register', { name, email, password });
+  localStorage.setItem('email', email);
+  localStorage.setItem('userId', response.data.id);
   return response.data;
 };
 
 export const login = async (email: string, password: string): Promise<LoginResponse> => {
   const response = await api.post('/auth/login', { email, password });
+
+  console.log('Login API response:', response.data);
   return response.data;
 };
 
@@ -46,6 +50,32 @@ export const newPassword = async (email: string, currentPassword: string, newPas
 export const deleteUser = async (id: string): Promise<void> => {
   const token = localStorage.getItem('token');
   const response = await api.delete(`users/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  });
+  return response.data;
+};
+
+export const getUserById = async (id: string) => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    throw new Error('No token found');
+  }
+  const response = await api.get(`/users/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  });
+  return response.data;
+};
+
+export const updateUser = async (id: string, cellphone: string, address: string) => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    throw new Error('No token found');
+  }
+  const response = await api.put(`/users/${id}`, { cellphone, address }, {
     headers: {
       Authorization: `Bearer ${token}`,
     }

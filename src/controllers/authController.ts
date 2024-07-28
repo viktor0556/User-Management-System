@@ -42,7 +42,7 @@ export const loginUser = async (req: Request, res: Response) => {
         process.env.ACCESS_TOKEN_SECRET as string,
         { expiresIn: '1h' }
       );
-      res.json({ token, name: user.name });
+      res.json({ token, user: { id: user.id, email: user.email, name: user.name } });
     } else {
       res.status(401).send('Invalid credentials');
     }

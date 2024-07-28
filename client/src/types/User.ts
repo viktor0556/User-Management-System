@@ -4,12 +4,17 @@ export interface UserInterface {
   email: string;
   created_at: string;
   role: string;
+  cellphone?: string;
+  address?: string;
 }
 
 export interface LoginResponse {
   token: string;
-  redirectTo: string;
-  name: string;
+  user: {
+    id: string;
+    name: string;
+    email: string;
+  };
 }
 
 export interface MyJwtPayload {

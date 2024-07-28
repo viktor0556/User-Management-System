@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
 const Home: React.FC = () => {
-  return (
+  return(
     <div>
-      <h1>Welcome to the User Management System</h1>
+      Home page
     </div>
   );
 };

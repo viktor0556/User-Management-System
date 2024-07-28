@@ -1,7 +1,33 @@
+# User Management System
+
+## Project Description
+
+This project implements a user management system that allows users to be created, viewed and deleted. The application consists of two main parts:
+- **User interface**: It allows users to view and update their personal data.
+- **Administrator Interface**: Allows administrators to delete users.
+
+### Functions
+
+#### User Page
+
+- **Create User**: Enables registration of new users by entering name, address and phone number.
+- **Viewing User Data**: The user can view his name, email address, phone number and address information.
+- **Modification of data**: The user can change her phone number and address.
+- **Change password**: It is possible to change the user password.
+
+#### Admin Page
+
+- **List of Users**: Administrators can list all users.
+- **Delete Users**: Allows administrators to delete users from the system.
+
 ## Built with
 
 - [React](https://react.dev/)
 - [Node](https://nodejs.org/en) (v16.20.0)
+- [Express](https://expressjs.com/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [Tailwind](https://tailwindcss.com/)
+- [Redis] (*Future integration*)
 
 To get a local copy of the code, clone it using git:
 
@@ -34,7 +60,9 @@ CREATE TABLE users (
   name VARCHAR(50) NOT NULL,
   email VARCHAR(100) NOT NULL UNIQUE,
   password VARCHAR(60) NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  cellphone VARCHAR(225),
+  address VARCHAR(225)
 );
 
 ```

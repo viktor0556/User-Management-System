@@ -11,6 +11,10 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!email || !password) {
+      alert("Please fill in all fields.");
+      return;
+    }
     try {
       const response = await login(email, password);
       console.log('Login response:', response);
@@ -28,7 +32,7 @@ const Login: React.FC = () => {
       }
     } catch (error) {
       console.error("Login error:", error);
-      alert("Invalid credentials");
+      alert("Invalid email or password");
     }
   };
 
@@ -43,7 +47,6 @@ const Login: React.FC = () => {
             <form
               onSubmit={handleSubmit}
               className="space-y-4 md:space-y-6"
-              action="#"
             >
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">

@@ -14,6 +14,9 @@ const User: React.FC = () => {
       const userId = localStorage.getItem("userId");
       const storedEmail = localStorage.getItem("email");
 
+      console.log("Fetched userId from localStorage:", userId);
+      console.log("Fetched email from localStorage:", storedEmail);
+
       if (!userId || !storedEmail) {
         console.error("No userId or email found in localStorage");
         return;

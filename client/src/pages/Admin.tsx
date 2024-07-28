@@ -37,24 +37,55 @@ const Admin: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="bg-blue-600 text-white p-4">
-        <h1 className="text-2xl">Admin Dashboard</h1>
-      </header>
-      <ul>
-        {users.map((user) => (
-          <li className="border px-4 py-2" key={user.id}>
-            {user.name} ({user.email})
-            <button onClick={() => handleDelete(user.id.toString())}
-            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700"
-            >
-              Delete
-            </button>
-          </li>
-        ))}
-        {<Logout />}
-      </ul>
-    </div>
+    <div className="min-h-screen flex flex-col bg-gray-100">
+    <header className="bg-blue-600 text-white p-4 shadow-md">
+      <div className="container mx-auto flex items-center justify-between">
+        <h1 className="text-2xl font-semibold">Admin Dashboard</h1>
+        <Logout />
+      </div>
+    </header>
+    <main className="flex-1 p-6">
+      <div className="container mx-auto">
+        <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Name
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Email
+                </th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {users.map((user) => (
+                <tr key={user.id}>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    {user.name}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {user.email}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <button
+                      onClick={() => handleDelete(user.id.toString())}
+                      className="text-red-600 hover:text-red-800"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
   );
 };
 
